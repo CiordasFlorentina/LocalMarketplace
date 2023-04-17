@@ -1,0 +1,50 @@
+.tags {
+  display: flex;
+  justify-content: flex-end;
+
+  ion-button {
+    font-size: 11px;
+    opacity: 0.7;
+  }
+}
+
+.price {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+ion-card-title {
+  font-size: 28px
+}
+
+ion-grid {
+
+  width: 100%
+}
+
+.sort-row ion-col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+ion-chip {
+  --background: var(--ion-color-primary);
+  --color: #adefd1;
+}
+
+ion-accordion-group {
+  margin: 20px 0;
+}
+
+.filter-column {
+  padding-top: 70px;
+}
+
+.accordion-item {
+  border: 1px solid lightgrey;
+}
+
+.content-container {
+  padding: 10px 50px;
+}

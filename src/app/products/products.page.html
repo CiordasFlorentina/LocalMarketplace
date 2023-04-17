@@ -1,0 +1,141 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Local Market</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-container">
+    <div class="ion-margin-start">
+      <h1>Discover our list of products</h1>
+      <h2>Everything we sell is organic and locally produced by farmers in your area</h2>
+    </div>
+
+    <ion-grid class="outer-grid">
+      <ion-row>
+        <ion-col size="2" class="filter-column">
+          <ion-accordion-group>
+            <ion-accordion value="first">
+              <ion-item slot="header" class="accordion-item">
+                <ion-label>Category</ion-label>
+              </ion-item>
+              <div class="ion-no-padding" slot="content">
+                <ion-item lines="none" *ngFor="let c of categoryOpts; let i = index">
+                  <ion-checkbox slot="start" (ionChange)="checkCategory(i)" class="category-checkbox"></ion-checkbox>
+                  <ion-label>{{c.value | titlecase}}</ion-label>
+                </ion-item>
+              </div>
+            </ion-accordion>
+
+          </ion-accordion-group>
+          <ion-accordion-group>
+            <ion-accordion>
+              <ion-item slot="header" class="accordion-item">
+                <ion-label>Availability</ion-label>
+              </ion-item>
+              <div class="ion-no-padding" slot="content">
+                <ion-item lines="none" *ngFor="let a of availabilityOpts; let i = index">
+                  <ion-checkbox slot="start" (ionChange)="checkSeason(i)"></ion-checkbox>
+                  <ion-label>{{a.label | titlecase}}</ion-label>
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+        </ion-col>
+        <ion-col size="10">
+          <ion-grid class="ion-padding inner-grid " fixed="true">
+            <ion-row class="sort-row">
+              <ion-col>
+                <ion-item>
+                  <ion-label>
+                    <ion-icon slot="icon-only" name="search"></ion-icon>
+                  </ion-label>
+                  <ion-input placeholder="Search products" [clearInput]="true"
+                             [formControl]="searchControl"></ion-input>
+                </ion-item>
+                <ion-item lines="none">
+                  <ion-label>Sort by:</ion-label>
+                  <ion-button id="click-trigger" fill="clear" size="default">
+                    {{sortByControl.value}}
+                    <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+                  </ion-button>
+                  <ion-popover trigger="click-trigger" triggerAction="click" [dismissOnSelect]="true">
+                    <ng-template>
+                      <ion-content class="ion-no-padding">
+                        <ion-item lines="none">
+                          <ion-label class="ion-no-margin">Sort By:</ion-label>
+                        </ion-item>
+                        <ion-list class="ion-no-padding">
+                          <ion-radio-group value="name" [formControl]="sortByControl">
+                            <ion-item lines="none">
+                              <ion-label>Name</ion-label>
+                              <ion-radio slot="end" value="name"></ion-radio>
+                            </ion-item>
+                            <ion-item lines="none">
+                              <ion-label>Price</ion-label>
+                              <ion-radio slot="end" value="price"></ion-radio>
+                            </ion-item>
+                          </ion-radio-group>
+                        </ion-list>
+                      </ion-content>
+                    </ng-template>
+                  </ion-popover>
+                </ion-item>
+
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col
+                size-xs="12"
+                size-sm="6"
+                size-md="4"
+                size-lg="6"
+                size-xl="2"
+                class="ion-text-center"
+                *ngFor="let product of products"
+              >
+                <ion-card class="product-card">
+                  <ion-img
+                    [src]="product.image"></ion-img>
+                  <ion-card-header class="ion-no-padding ion-padding-horizontal">
+                    <ion-card-title class="ion-text-left product-name">{{product.name | titlecase}}</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <div class="tags">
+                      <ion-button size="small" shape="round" [disabled]="true">
+                        <span class="product-category">{{product.category}}</span>
+                      </ion-button>
+                      <ion-button *ngIf="product.availability"
+                                  size="small" shape="round" color="secondary" [disabled]="true">
+                        In Stock: <span class="product-availability">{{product.availability}}</span>
+                      </ion-button>
+                      <ion-button *ngIf="!product.availability"
+                                  size="small" shape="round" color="danger" [disabled]="true">
+                        Out Of Stock
+                      </ion-button>
+                    </div>
+
+                    <ion-item class="ion-text-right" lines="none">
+                      <ion-label color="primary" class="price"><span class="product-price">{{product.price}}</span>$
+                      </ion-label>
+                    </ion-item>
+                    <ion-button color="primary" expand="block" [disabled]="!product.availability">
+                      <ion-icon name="cart" slot="start"></ion-icon>
+                      Add To Cart
+                    </ion-button>
+                  </ion-card-content>
+
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>
