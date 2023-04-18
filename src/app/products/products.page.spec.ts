@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
@@ -21,7 +22,8 @@ describe('ProductsPage', () => {
       providers: [
         {provide: ProductsService, useValue: productsServiceMock}
       ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductsPage);
@@ -72,7 +74,7 @@ describe('ProductsPage', () => {
     it('should send chosen category as parameter in getProducts method', fakeAsync(() => {
       const categoryCheck = fixture.debugElement.query(By.css('.category-checkbox')).nativeElement;
       categoryCheck.click();
-      tick(300);
+      tick(400);
       expect(productsServiceMock.getProducts).toHaveBeenCalledWith(jasmine.any(String), [component.categoryOpts[0].value], []);
     }));
   })

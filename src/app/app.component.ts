@@ -11,7 +11,7 @@ export class AppComponent {
   user: User| null = null;
 
   constructor(private authS: AuthService) {
-    this.user = this.authS.currentUser
+    this.user = this.authS.currentUser;
   }
 
   logout() {
