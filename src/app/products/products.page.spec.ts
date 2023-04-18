@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { ProductsPage } from './products.page';
 import { ProductsService } from './products.service';
 
-fdescribe('ProductsPage', () => {
+describe('ProductsPage', () => {
   let component: ProductsPage;
   let fixture: ComponentFixture<ProductsPage>;
   let productsServiceMock: jasmine.SpyObj<any>;

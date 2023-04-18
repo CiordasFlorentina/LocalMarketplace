@@ -1,0 +1,76 @@
+<ion-content color="primary">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="3" class="ion-align-self-center ion-justify-content-center">
+        <ng-container *ngIf="mode === 'Login'">
+          <ion-card color="light">
+            <ion-card-content class="ion-padding" [formGroup]="loginForm">
+              <h1 class="margin-bottom-double">Login to your Account</h1>
+              <ion-label>Email Address*</ion-label>
+              <ion-item fill="outline" class="margin-bottom">
+                <ion-input type="email" formControlName="email"></ion-input>
+                <ion-note slot="error" *ngIf="hasError()">Invalid email</ion-note>
+              </ion-item>
+
+              <ion-label>Password*</ion-label>
+              <ion-item fill="outline" class="margin-bottom-double">
+                <ion-input type="password" formControlName="password"></ion-input>
+              </ion-item>
+
+              <ion-button color="primary" expand="block" [disabled]="loginForm.invalid" (click)="login()">
+                Login
+              </ion-button>
+            </ion-card-content>
+
+          </ion-card>
+
+          <div class="message">Don't have an account? <strong (click)="switchMode('Register')">Register</strong></div>
+        </ng-container>
+        <ng-container *ngIf="mode === 'Register'">
+          <ion-card color="light">
+            <ion-card-content class="ion-padding" [formGroup]="registerForm">
+              <h1 class="margin-bottom-double">Register Account</h1>
+              <ion-label>Name*</ion-label>
+              <ion-item fill="outline" class="margin-bottom">
+                <ion-input formControlName="name"></ion-input>
+              </ion-item>
+              <ion-label>Email Address*</ion-label>
+              <ion-item fill="outline" class="margin-bottom">
+                <ion-input type="email" formControlName="email"></ion-input>
+                <ion-note slot="error" *ngIf="hasError()">Invalid email</ion-note>
+              </ion-item>
+
+              <ion-label>Password*</ion-label>
+              <ion-item fill="outline" class="margin-bottom">
+                <ion-input type="password" formControlName="password"></ion-input>
+              </ion-item>
+
+              <ion-label>Register as*</ion-label>
+              <div class="register-container margin-bottom">
+                <ion-item lines="none" color="light" class="ion-no-padding">
+                  <ion-checkbox slot="start" class="ion-no-margin" [formControl]="customerCheck" (click)="check('customer')"></ion-checkbox>
+                  <ion-label>Customer</ion-label>
+                </ion-item>
+                <ion-item lines="none" color="light" class="ion-no-padding">
+                  <ion-checkbox slot="start" class="ion-no-margin" [formControl]="farmerCheck" (click)="check('farmer')"></ion-checkbox>
+                  <ion-label>Farmer</ion-label>
+                </ion-item>
+              </div>
+
+
+              <ion-button color="primary" expand="block" [disabled]="registerForm.invalid" (click)="register()">
+                Register
+              </ion-button>
+            </ion-card-content>
+
+          </ion-card>
+
+          <div class="message register">Have an account? <strong (click)="switchMode('Login')">Login</strong></div>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+</ion-content>

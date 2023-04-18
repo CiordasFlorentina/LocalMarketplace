@@ -1,0 +1,52 @@
+ion-row, ion-grid {
+  height: 100%;
+}
+
+ion-col {
+  max-width: 450px !important;
+}
+
+ion-card {
+
+}
+
+ion-card-content {
+  padding: 40px;
+  margin: auto;
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
+}
+
+.margin-bottom-double {
+  margin-bottom: 40px;
+}
+
+.message {
+  margin: 0 auto;
+  padding: 15px 0;
+  width: 60%;
+
+  &.register {
+    width: 43%;
+  }
+
+  strong {
+    cursor: pointer;
+  }
+}
+
+.register-container {
+  ion-item {
+    width: 35%;
+    display: inline-block;
+    font-size: 15px;
+    padding-right: 5px;
+
+    ion-checkbox {
+      margin-right: 5px;
+    }
+  }
+}
+
