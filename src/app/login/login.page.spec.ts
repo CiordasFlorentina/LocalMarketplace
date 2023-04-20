@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 
 import { LoginPage } from './login.page';
 
@@ -15,8 +15,8 @@ describe('LoginPage', () => {
 
   beforeEach(waitForAsync(() => {
     authServiceMock = {
-      login: jasmine.createSpy().and.returnValue(of(null)),
-      register: jasmine.createSpy().and.returnValue(of(null)),
+      login: jasmine.createSpy().and.returnValue(of({farmer: false})),
+      register: jasmine.createSpy().and.returnValue(of({farmer: true})),
       setUser: jasmine.createSpy()
     }
 

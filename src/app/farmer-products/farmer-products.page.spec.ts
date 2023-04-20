@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
 import { of } from 'rxjs';
 import { Product } from '../models/product';
+import { AuthService } from '../services/auth.service';
 import { ProductsService } from '../services/products.service';
 import { AddProductComponent } from './add-product/add-product.component';
 
@@ -13,6 +14,7 @@ describe('FarmerProductsPage', () => {
   let fixture: ComponentFixture<FarmerProductsPage>;
   let modalControllerMock: jasmine.SpyObj<any>;
   let productsServiceMock: jasmine.SpyObj<any>;
+  let authServiceMock: jasmine.SpyObj<any>;
 
   beforeEach(waitForAsync(() => {
 
@@ -30,11 +32,16 @@ describe('FarmerProductsPage', () => {
       })
     };
 
+    authServiceMock = {
+      getUser: jasmine.createSpy().and.returnValue({id: '1'})
+    }
+
     TestBed.configureTestingModule({
       declarations: [FarmerProductsPage],
       providers: [
         {provide: ModalController, useValue: modalControllerMock},
         {provide: ProductsService, useValue: productsServiceMock},
+        {provide: AuthService, useValue: authServiceMock},
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

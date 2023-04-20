@@ -31,6 +31,7 @@ describe('AuthService', () => {
 
   it('should call post on register', () => {
     const user = {
+      id: 1,
       email: 'email',
       password: 'pass',
       name: 'name',
@@ -42,6 +43,7 @@ describe('AuthService', () => {
 
   it('should set user', () => {
     const user = {
+      id: 2,
       email: 'email',
       password: 'pass',
       name: 'name',

@@ -16,11 +16,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
   categoryOpts = this.productsService.getCategories().map(c => ({value: c, checked: false}));
 
-  availabilityOpts = [
-    {label: 'all products', value: 'all', checked: false},
-    {label: 'in stock', value: 'in stock', checked: false},
-    {label: 'out of stock', value: 'out of stock', checked: false},
-  ];
+  availabilityOpts = this.productsService.getAvailabilityOpts().map(o => ({...o, checked: false}));
 
   refreshProductsSubj = new Subject<void>();
 
@@ -42,7 +38,7 @@ export class ProductsPage implements OnInit, OnDestroy {
       .subscribe(() => this.refreshProductsSubj.next());
 
     this.refreshProductsSubj.pipe(
-      debounceTime(300),
+      debounceTime(400),
       takeUntil(this.onDestroy$)
     ).subscribe(() => this.getProducts());
 
@@ -68,6 +64,7 @@ export class ProductsPage implements OnInit, OnDestroy {
     const sortBy = this.sortByControl.value as string;
     const categories = this.categoryOpts.filter(c => c.checked).map(c => c.value);
     const seasons = this.availabilityOpts.filter(s => s.checked).map(s => s.value);
-    this.productsService.getProducts(sortBy, categories, seasons).pipe(first()).subscribe(res => this.products = res.items);
+    this.productsService.getProducts(this.searchControl.value, sortBy, categories, seasons)
+      .pipe(first()).subscribe(res => this.products = res.items);
   }
 }

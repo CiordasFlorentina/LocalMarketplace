@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AuthService } from './auth.service';
+import { User } from '../models/user';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,12 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       farmer: [null, Validators.required]
-    })
+    });
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-    })
+    });
   }
 
   ngOnInit() {
@@ -56,12 +58,13 @@ export class LoginPage implements OnInit {
 
   login() {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
-      .pipe(first()).subscribe((user) => {
-      this.authService.setUser(user);
-      this.router.navigate(['/products']);
-      this.registerForm.reset();
-      this.loginForm.reset();
-    });
+      .pipe(first())
+      .subscribe((user: User) => {
+        this.authService.setUser(user);
+        this.navigate(user.farmer);
+        this.registerForm.reset();
+        this.loginForm.reset();
+      });
   }
 
   register() {
@@ -70,11 +73,17 @@ export class LoginPage implements OnInit {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
       farmer: this.registerForm.value.farmer,
-    }).pipe(first()).subscribe((user) => {
-      this.authService.setUser(user);
-      this.router.navigate(['/products']);
-      this.registerForm.reset();
-      this.loginForm.reset();
-    });
+    })
+      .pipe(first())
+      .subscribe((user: User) => {
+        this.authService.setUser(user);
+        this.navigate(user.farmer);
+        this.registerForm.reset();
+        this.loginForm.reset();
+      });
+  }
+
+  private navigate(farmer: boolean): void {
+    farmer ? this.router.navigate(['/farmer-products']) : this.router.navigate(['/products']);
   }
 }

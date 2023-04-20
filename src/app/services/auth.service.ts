@@ -8,7 +8,11 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser: User | null = null;
+  // currentUser: User | null = null;
+  currentUser: User | null = {
+    farmer: true,
+    id: '1'
+  } as any;
   url = environment.url;
 
   constructor(private httpClient: HttpClient) {
@@ -30,6 +34,10 @@ export class AuthService {
 
   logout() {
     this.currentUser = null;
+  }
+
+  getUser(): User {
+    return this.currentUser as User;
   }
 
 

@@ -12,6 +12,10 @@
                     *ngIf="!user?.farmer">
             <ion-label>Products</ion-label>
           </ion-item>
+          <ion-item routerLink="/farmer-products" routerDirection="forward" routerLinkActive="ion-activated"
+                    *ngIf="user?.farmer">
+            <ion-label>Own Products</ion-label>
+          </ion-item>
           <ion-item routerLink="/products" routerDirection="forward" routerLinkActive="active" *ngIf="!user?.farmer">
             <ion-label>Cart</ion-label>
           </ion-item>

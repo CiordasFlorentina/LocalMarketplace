@@ -10,7 +10,8 @@ export class ProductsService {
   constructor() {
   }
 
-  getProducts(sortBy: string, categories: string[], seasons: string[]): Observable<any> {
+  getProducts(search: string | null, sortBy: string, categories: string[], availableOpts: string[]): Observable<any> {
+    console.log(search,sortBy, categories, availableOpts);
     return of({
         sortBy: 'name',
         items: [
@@ -99,7 +100,7 @@ export class ProductsService {
     ).pipe(delay(500));
   }
 
-  getFarmersProducts(farmerId: string): Observable<Product[]> {
+  getFarmersProducts(farmerId: number): Observable<Product[]> {
     return of([
         {
           name: 'tomatoes',
@@ -185,7 +186,7 @@ export class ProductsService {
     )
   }
 
-  addProduct(farmerId: string, product: Product): Observable<any> {
+  addProduct(farmerId: number, product: Product): Observable<any> {
     return of(true);
   }
 
@@ -193,8 +194,15 @@ export class ProductsService {
     return of(true);
   }
 
-
-  getCategories() {
+  getCategories(): string[] {
     return ['vegetables', 'fruits', 'greens', 'beans', 'nuts', 'seasonal'];
+  }
+
+  getAvailabilityOpts(): { label: string; value: string }[] {
+    return [
+      {label: 'all products', value: 'all'},
+      {label: 'in stock', value: 'in stock'},
+      {label: 'out of stock', value: 'out of stock'}
+    ];
   }
 }
