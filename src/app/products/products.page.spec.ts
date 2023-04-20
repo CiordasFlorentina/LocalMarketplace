@@ -80,7 +80,7 @@ describe('ProductsPage', () => {
     it('should send chosen category as parameter in getProducts method', fakeAsync(() => {
       const categoryCheck = fixture.debugElement.query(By.css('.category-checkbox')).nativeElement;
       categoryCheck.click();
-      tick(400);
+      tick(500);
       expect(productsServiceMock.getProducts).toHaveBeenCalledWith(
         jasmine.any(String),
         jasmine.any(String),

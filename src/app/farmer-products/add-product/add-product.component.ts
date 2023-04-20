@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products.service';
@@ -16,6 +16,8 @@ export class AddProductComponent implements OnInit {
   categories = this.productService.getCategories();
   imageString: string | null = null;
 
+  fileControl = new FormControl(null);
+
   constructor(
     private fb: FormBuilder,
     private modalCtrl: ModalController,
@@ -23,7 +25,7 @@ export class AddProductComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      image: ['', Validators.required],
+      image: [null, Validators.required],
       price: [null, Validators.required],
       availability: [null, Validators.required],
       category: [null, Validators.required],
@@ -85,7 +87,8 @@ export class AddProductComponent implements OnInit {
   }
 
 
-  clearImage() {
+  clearImage(): void {
     this.form.get('image')?.setValue(null);
+    this.fileControl.setValue(null);
   }
 }

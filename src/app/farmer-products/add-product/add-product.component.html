@@ -27,7 +27,7 @@
         name="fileInput"
         accept="image/*"
         (change)="selectFile($event)"
-
+        [formControl]="fileControl"
       />
     </ion-item>
 

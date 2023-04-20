@@ -95,4 +95,24 @@ describe('AddProductComponent', () => {
     component.clearImage();
     expect(component.form.value.image).toBe(null);
   });
+  it('should not clear image if form is not set correctly', () => {
+    component.form.removeControl('image');
+    component.clearImage();
+    expect(component.form.value.image).toBe(undefined);
+  });
+
+  it('should not try to convert image if none was selected', () => {
+    component.selectFile({target: {files: []}});
+    expect(component.form.value.image).toBe(null);
+  });
+
+  it('should not try to convert image if event target is null', () => {
+    component.selectFile({});
+    expect(component.form.value.image).toBe(null);
+  });
+
+  it('should not try to convert image if event is null', () => {
+    component.selectFile(null);
+    expect(component.form.value.image).toBe(null);
+  });
 });
