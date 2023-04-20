@@ -99,9 +99,9 @@
                 *ngFor="let product of products"
               >
                 <ion-card class="product-card">
-                  <ion-img
-                    [src]="product.image"></ion-img>
-                  <ion-card-header class="ion-no-padding ion-padding-horizontal">
+                  <ion-card-header class="ion-no-padding ion-padding">
+                    <ion-img
+                      [src]="product.image"></ion-img>
                     <ion-card-title class="ion-text-left product-name">{{product.name | titlecase}}</ion-card-title>
                   </ion-card-header>
                   <ion-card-content>

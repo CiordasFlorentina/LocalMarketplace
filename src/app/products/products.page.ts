@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, first, Subject, takeUntil } from 'rxjs';
 import { Product } from '../models/product';
-import { ProductsService } from './products.service';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-products',
@@ -14,13 +14,10 @@ export class ProductsPage implements OnInit, OnDestroy {
   sortByControl = new FormControl('name');
   searchControl = new FormControl('');
 
-  categoryOpts = [
-    {value: 'vegetables', checked: false},
-    {value: 'fruits', checked: false},
-  ];
+  categoryOpts = this.productsService.getCategories().map(c => ({value: c, checked: false}));
 
   availabilityOpts = [
-    {label:'all products', value: 'all', checked: false},
+    {label: 'all products', value: 'all', checked: false},
     {label: 'in stock', value: 'in stock', checked: false},
     {label: 'out of stock', value: 'out of stock', checked: false},
   ];

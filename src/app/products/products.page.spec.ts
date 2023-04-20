@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { of } from 'rxjs';
 
 import { ProductsPage } from './products.page';
-import { ProductsService } from './products.service';
+import { ProductsService } from '../services/products.service';
 
 describe('ProductsPage', () => {
   let component: ProductsPage;
@@ -14,7 +14,8 @@ describe('ProductsPage', () => {
 
   beforeEach(waitForAsync(() => {
     productsServiceMock = {
-      getProducts: jasmine.createSpy().and.returnValue(of([]))
+      getProducts: jasmine.createSpy().and.returnValue(of([])),
+      getCategories: jasmine.createSpy().and.returnValue(['vegetables'])
     };
 
     TestBed.configureTestingModule({

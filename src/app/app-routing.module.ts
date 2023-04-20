@@ -15,6 +15,16 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'farmer-products',
+    loadChildren: () => import('./farmer-products/farmer-products.module').then( m => m.FarmerProductsPageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'products',
+    pathMatch: 'full'
+  },
+
 ];
 
 @NgModule({
