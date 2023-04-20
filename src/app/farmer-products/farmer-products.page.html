@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Local Market</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-container">
+    <div class="ion-margin-start">
+      <h1>Products you have for sale</h1>
+      <ion-button color="tertiary" download="true" fill="outline">
+        <ion-label>Download Sales Report</ion-label>
+      </ion-button>
+    </div>
+
+    <ion-grid class="ion-padding inner-grid " fixed="true">
+      <ion-row class="buttons-row">
+        <ion-col>
+          <ion-fab>
+            <ion-fab-button color="primary" size="medium" id="open-modal" (click)="openModal(null)">
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col
+          size-xs="12"
+          size-sm="6"
+          size-md="4"
+          size-lg="6"
+          size-xl="3"
+          class="ion-text-center product-col"
+          *ngFor="let product of products"
+        >
+          <ion-card class="product-card">
+            <ion-card-header class="ion-no-padding ion-padding">
+              <ion-img
+                [src]="product.image"></ion-img>
+
+<!--              <ion-img [src]="'data:image/jpeg;base64,'+imagePath"></ion-img>-->
+              <ion-card-title class="ion-text-left product-name">{{product.name | titlecase}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="tags">
+                <ion-button size="small" shape="round" [disabled]="true">
+                  <span class="product-category">{{product.category}}</span>
+                </ion-button>
+                <ion-button *ngIf="product.availability"
+                            size="small" shape="round" color="secondary" [disabled]="true">
+                  In Stock: <span class="product-availability">{{product.availability}}</span>
+                </ion-button>
+                <ion-button *ngIf="!product.availability"
+                            size="small" shape="round" color="danger" [disabled]="true">
+                  Out Of Stock
+                </ion-button>
+              </div>
+
+              <ion-item class="ion-text-right" lines="none">
+                <ion-label color="primary" class="price"><span class="product-price">{{product.price}}</span>$
+                </ion-label>
+              </ion-item>
+              <ion-button color="primary" expand="block" (click)="openModal(product)">
+                <ion-icon name="create-outline" slot="start"></ion-icon>
+                Edit Item
+              </ion-button>
+            </ion-card-content>
+
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

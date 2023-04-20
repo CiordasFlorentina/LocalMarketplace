@@ -19,13 +19,25 @@ ion-card-title {
 
 ion-grid {
 
-  width: 100%
+  width: 80%
 }
 
-.sort-row ion-col {
+.buttons-row ion-col {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  ion-fab {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 70px;
+  }
+
+  ion-button {
+    margin: 0 15px;
+  }
 }
 
 ion-chip {
@@ -49,10 +61,17 @@ ion-accordion-group {
   padding: 10px 50px;
 }
 
-ion-card-content {
-  padding-bottom: 20px;
+ion-col.product-col {
+  max-width: 350px !important;
 }
 
-ion-card {
-  max-width: 400px;
+app-add-product {
+  height: 100%;
 }
+
+
+ion-modal {
+  --height: 650px;
+}
+
+

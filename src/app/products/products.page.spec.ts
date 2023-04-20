@@ -4,16 +4,17 @@ import { IonicModule } from '@ionic/angular';
 import { of } from 'rxjs';
 
 import { ProductsPage } from './products.page';
-import { ProductsService } from './products.service';
+import { ProductsService } from '../services/products.service';
 
-fdescribe('ProductsPage', () => {
+describe('ProductsPage', () => {
   let component: ProductsPage;
   let fixture: ComponentFixture<ProductsPage>;
   let productsServiceMock: jasmine.SpyObj<any>;
 
   beforeEach(waitForAsync(() => {
     productsServiceMock = {
-      getProducts: jasmine.createSpy().and.returnValue(of([]))
+      getProducts: jasmine.createSpy().and.returnValue(of([])),
+      getCategories: jasmine.createSpy().and.returnValue(['vegetables'])
     };
 
     TestBed.configureTestingModule({
@@ -72,7 +73,7 @@ fdescribe('ProductsPage', () => {
     it('should send chosen category as parameter in getProducts method', fakeAsync(() => {
       const categoryCheck = fixture.debugElement.query(By.css('.category-checkbox')).nativeElement;
       categoryCheck.click();
-      tick(300);
+      tick(400);
       expect(productsServiceMock.getProducts).toHaveBeenCalledWith(jasmine.any(String), [component.categoryOpts[0].value], []);
     }));
   })
