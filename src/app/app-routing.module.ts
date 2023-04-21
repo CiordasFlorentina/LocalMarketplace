@@ -9,21 +9,25 @@ const routes: Routes = [
   },
   {
     path: 'products',
-    loadChildren: () => import('./products/products.module').then( m => m.ProductsPageModule)
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'farmer-products',
-    loadChildren: () => import('./farmer-products/farmer-products.module').then( m => m.FarmerProductsPageModule)
+    loadChildren: () => import('./farmer-products/farmer-products.module').then(m => m.FarmerProductsPageModule)
   },
+  // {
+  //   path: 'cart',
+  //   loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
+  // },
   {
     path: '**',
     redirectTo: 'products',
     pathMatch: 'full'
-  },
+  }
 
 ];
 

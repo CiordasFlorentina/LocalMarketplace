@@ -10,7 +10,7 @@ import { User } from '../models/user';
 export class AuthService {
   // currentUser: User | null = null;
   currentUser: User | null = {
-    farmer: true,
+    farmer: false,
     id: '1'
   } as any;
   url = environment.url;
@@ -19,13 +19,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<User> {
-    // return of(null as any);
-    return this.httpClient.post<User>(`${this.url}/login`, {email, password});
+    return this.httpClient.get<User>(`${this.url}/user/login/email/${email}/password/${password}`);
   }
 
   register(user: User): Observable<User> {
-    return this.httpClient.post<User>(`${this.url}/register`, user);
-    // return of(null as any);
+    return this.httpClient.post<User>(`${this.url}/user/register`, user);
   }
 
   setUser(user: User): void {

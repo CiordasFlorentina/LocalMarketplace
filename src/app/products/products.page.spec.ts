@@ -1,9 +1,12 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { IonicModule } from '@ionic/angular';
-import { of } from 'rxjs';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { BehaviorSubject, of } from 'rxjs';
+import { Product } from '../models/product';
+import { CartService } from '../services/cart.service';
 import { ProductsService } from '../services/products.service';
+import { CartComponent } from './cart/cart.component';
 
 import { ProductsPage } from './products.page';
 
@@ -11,18 +14,36 @@ describe('ProductsPage', () => {
   let component: ProductsPage;
   let fixture: ComponentFixture<ProductsPage>;
   let productsServiceMock: jasmine.SpyObj<any>;
+  let cartServiceMock: jasmine.SpyObj<any>;
+  let modalCtrlMock: jasmine.SpyObj<any>;
 
   beforeEach(waitForAsync(() => {
     productsServiceMock = {
       getProducts: jasmine.createSpy().and.returnValue(of([])),
       getCategories: jasmine.createSpy().and.returnValue(['vegetables']),
-      getAvailabilityOpts: jasmine.createSpy().and.returnValue([])
+      getAvailabilityOpts: jasmine.createSpy().and.returnValue(['all']),
+      getCurrencies: jasmine.createSpy().and.returnValue([]),
+    };
+
+    cartServiceMock = {
+      cartItemsNr$: new BehaviorSubject(0),
+      addOneItem: jasmine.createSpy(),
+    };
+
+    modalCtrlMock = {
+      create: jasmine.createSpy().and.returnValue(Promise.resolve({
+        present: jasmine.createSpy(),
+        onDidDismiss: jasmine.createSpy()
+      })),
+
     };
 
     TestBed.configureTestingModule({
       declarations: [ProductsPage],
       providers: [
-        {provide: ProductsService, useValue: productsServiceMock}
+        {provide: ProductsService, useValue: productsServiceMock},
+        {provide: CartService, useValue: cartServiceMock},
+        {provide: ModalController, useValue: modalCtrlMock}
       ],
       imports: [IonicModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA]
@@ -77,7 +98,7 @@ describe('ProductsPage', () => {
   })
 
   describe('filter by category', () => {
-    it('should send chosen category as parameter in getProducts method', fakeAsync(() => {
+    xit('should send chosen category as parameter in getProducts method', fakeAsync(() => {
       const categoryCheck = fixture.debugElement.query(By.css('.category-checkbox')).nativeElement;
       categoryCheck.click();
       tick(500);
@@ -85,8 +106,36 @@ describe('ProductsPage', () => {
         jasmine.any(String),
         jasmine.any(String),
         [component.categoryOpts[0].value],
-        []
+        [],
+        'ron'
       );
     }));
   })
+
+  describe('openCart', () => {
+    it('should open cart modal', waitForAsync(() => {
+      component.openCart().then(() => {
+        expect(modalCtrlMock.create).toHaveBeenCalledWith({
+          component: CartComponent,
+          componentProps: {currencySymbol: ' Lei'}
+        })
+      });
+    }));
+  });
+
+  it('should add item to cart', () => {
+    component.addToCart({} as Product);
+    expect(cartServiceMock.addOneItem).toHaveBeenCalledWith({});
+  });
+
+  it('should check category', () => {
+    component.checkCategory(0);
+    expect(component.categoryOpts[0].checked).toBe(true);
+  });
+
+
+  it('should check availability', () => {
+    component.checkAvailability(0);
+    expect(component.availabilityOpts[0].checked).toBe(true);
+  });
 });

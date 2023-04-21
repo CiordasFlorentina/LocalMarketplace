@@ -68,7 +68,7 @@ describe('AddProductComponent', () => {
 
   it('should edit product', () => {
     component.product = {
-      id: '11',
+      id: 11,
       name: 'name',
       price: 2,
       availability: 3,
@@ -80,7 +80,7 @@ describe('AddProductComponent', () => {
     component.save();
     expect(modalControllerMock.dismiss).toHaveBeenCalledWith({
       product: {
-        id: '11',
+        id: 11,
         name: 'name',
         price: 2,
         availability: 3,
@@ -104,6 +104,11 @@ describe('AddProductComponent', () => {
   it('should not try to convert image if none was selected', () => {
     component.selectFile({target: {files: []}});
     expect(component.form.value.image).toBe(null);
+  });
+
+  it('should try to convert image if it was selected', () => {
+    component.selectFile({target: {files: [new Blob()]}});
+    expect(component.imageString).toBe(null);
   });
 
   it('should not try to convert image if event target is null', () => {

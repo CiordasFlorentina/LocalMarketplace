@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Cart</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" class="ion-margin" (click)="close()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="content-container">
+<ion-list>
+  <ion-item *ngFor="let item of items">
+    <div class="product-details">
+      <ion-img [src]="'data:image/jpeg;base64,'+ item.product.image" ></ion-img>
+      <ion-label>{{item.product.name | titlecase}}</ion-label>
+    </div>
+    <div class="price-details">
+      <ion-label>{{item.price}}{{currencySymbol}}</ion-label>
+    </div>
+    <div class="quantity-details">
+      <ion-icon name="remove-circle-outline" (click)="removeItem(item.product)"></ion-icon>
+      <ion-label>{{item.quantity}}</ion-label>
+      <ion-icon name="add-circle-outline" (click)="addItem(item.product)"></ion-icon>
+      <ion-icon name="trash" color="danger" (click)="removeAll(item.product)"></ion-icon>
+    </div>
+
+  </ion-item>
+</ion-list>
+  <div class="sum-details">
+    <ion-item>
+      <ion-label>Total price: <span>{{totalPrice}}{{currencySymbol}}</span></ion-label>
+    </ion-item>
+  </div>
+    <div class="buttons-container">
+      <ion-button color="light" fill="solid" size="default" (click)="close()">
+        Cancel
+      </ion-button>
+      <ion-button color="primary" fill="solid" (click)="placeOrder()" [disabled]="!items.length">
+        Place Order
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

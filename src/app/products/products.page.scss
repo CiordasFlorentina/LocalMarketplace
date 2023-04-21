@@ -56,3 +56,14 @@ ion-card-content {
 ion-card {
   max-width: 400px;
 }
+
+.cart-header-button {
+  font-size: 15px;
+
+  ion-badge {
+    position: absolute;
+    left: 16px;
+    top: 0;
+    font-size: 12px;
+  }
+}

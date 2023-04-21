@@ -3,7 +3,35 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Local Market</ion-title>
+    <ion-title>Local Marketplace</ion-title>
+
+    <ion-button slot="end" class="cart-header-button" (click)="openCart()">
+      <ion-badge color="danger" slot="start" mode="ios" *ngIf="(cartItemsNr | async) as nr ">{{nr}}</ion-badge>
+      <ion-icon slot="icon-only" name="cart"></ion-icon>
+    </ion-button>
+
+      <ion-button id="currency-trigger" fill="outline" size="default" slot="end" color="light" class="ion-margin-horizontal">
+        {{currencyControl.value | uppercase}}
+        <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+      </ion-button>
+      <ion-popover trigger="currency-trigger" triggerAction="click" [dismissOnSelect]="true">
+        <ng-template>
+          <ion-content class="ion-no-padding">
+            <ion-item lines="none">
+              <ion-label class="ion-no-margin">Select currency:</ion-label>
+            </ion-item>
+            <ion-list class="ion-no-padding">
+              <ion-radio-group value="name" [formControl]="currencyControl">
+                <ion-item lines="none" *ngFor="let currency of currencyOpts">
+                  <ion-label>{{currency.label}}</ion-label>
+                  <ion-radio slot="end" [value]="currency.value"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
   </ion-toolbar>
 </ion-header>
 
@@ -38,7 +66,7 @@
               </ion-item>
               <div class="ion-no-padding" slot="content">
                 <ion-item lines="none" *ngFor="let a of availabilityOpts; let i = index">
-                  <ion-checkbox slot="start" (ionChange)="checkSeason(i)"></ion-checkbox>
+                  <ion-checkbox slot="start" (ionChange)="checkAvailability(i)"></ion-checkbox>
                   <ion-label>{{a.label | titlecase}}</ion-label>
                 </ion-item>
               </div>
@@ -119,10 +147,10 @@
                     </div>
 
                     <ion-item class="ion-text-right" lines="none">
-                      <ion-label color="primary" class="price"><span class="product-price">{{product.price}}</span>$
+                      <ion-label color="primary" class="price"><span class="product-price">{{product.price}}</span>{{currencySymbol}}
                       </ion-label>
                     </ion-item>
-                    <ion-button color="primary" expand="block" [disabled]="!product.availability">
+                    <ion-button color="primary" expand="block" [disabled]="!product.availability" (click)="addToCart(product)">
                       <ion-icon name="cart" slot="start"></ion-icon>
                       Add To Cart
                     </ion-button>
